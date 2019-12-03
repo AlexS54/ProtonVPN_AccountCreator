@@ -56,9 +56,10 @@ driver1.find_element_by_xpath("/html/body/div[1]/main/main/div/div[2]/div/div[1]
 time.sleep(2)
 driver1.find_element_by_xpath("/html/body/div[1]/main/main/div/div[2]/div/div[1]/div[2]/div/div/div[2]/form/div[2]/button").click()
 while(not(check0_exists_by_xpath("/html/body/main/div[1]/div/div[2]/div[2]/div/div[1]/div[1]/div[4]/ul/li[2]/div[2]/span/a"))): time.sleep(1)   #Wait for the email with the code to arrive...
-time.sleep(1)
+time.sleep(2)
 driver0.find_element_by_xpath("/html/body/main/div[1]/div/div[2]/div[2]/div/div[1]/div[1]/div[4]/ul/li[2]/div[2]/span/a").click()
 while(not(check0_exists_by_xpath("/html/body/main/div[1]/div/div[2]/div[2]/div/div[1]/div[2]/div[2]/div[3]/p/code"))): time.sleep(1)
+time.sleep(2)
 code=driver0.find_element_by_xpath("/html/body/main/div[1]/div/div[2]/div[2]/div/div[1]/div[2]/div[2]/div[3]/p/code").text
 driver1.find_element_by_id("code").send_keys(code)      #Input code.
 driver1.find_element_by_xpath("/html/body/div[1]/main/main/div/div[2]/div/div[1]/div[2]/form/div/div/div[2]/button").click() #Finalize
