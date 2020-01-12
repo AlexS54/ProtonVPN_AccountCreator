@@ -9,6 +9,12 @@ def check0_exists_by_id(id):                #Functions used to stall the program
         return False
     return True
 
+def check0_exists_by_tag_name(tag_name):
+    try: driver0.find_element_by_tag_name(tag_name)
+    except NoSuchElementException:
+        return False
+    return True
+
 def check0_exists_by_xpath(id):
     try:
         driver0.find_element_by_xpath(id)
@@ -25,6 +31,8 @@ def check1_exists_by_xpath(id):
 
 driver0 = webdriver.Chrome()
 driver0.get("https://temp-mail.org/en/")                            #Open the temp-mail tab
+driver1=webdriver.Chrome()                                          
+driver1.get("https://account.protonvpn.com/signup")                 #Open a new window with the ProtonVPN signup page.
 ok=True
 while(not(check0_exists_by_id("mail")) or ok):                      #In case the page doesn't load or only partially loads a refresh is performed.                        
     driver0.refresh()
@@ -40,10 +48,7 @@ username=[]
 for letter in mailadress:                                          #The username is the email adress without everything that comes after '@'.
     if letter=='@':
         break
-    username+=letter
-driver1=webdriver.Chrome()
-driver1.get("https://account.protonvpn.com/signup")                #Open a new window with the ProtonVPN signup page.
-time.sleep(2)
+    username+=letter               
 while(not(check1_exists_by_xpath("/html/body/div[1]/main/main/div/div[4]/div[1]/div[3]/button"))):      #Making sure again that the page is fully loaded.
     driver1.refresh()
     time.sleep(3)
@@ -58,9 +63,9 @@ driver1.find_element_by_xpath("/html/body/div[1]/main/main/div/div[2]/div/div[1]
 while(not(check0_exists_by_xpath("/html/body/main/div[1]/div/div[2]/div[2]/div/div[1]/div[1]/div[4]/ul/li[2]/div[2]/span/a"))): time.sleep(1)   #Wait for the email with the code to arrive...
 time.sleep(2)
 driver0.find_element_by_xpath("/html/body/main/div[1]/div/div[2]/div[2]/div/div[1]/div[1]/div[4]/ul/li[2]/div[2]/span/a").click()
-while(not(check0_exists_by_xpath("/html/body/main/div[1]/div/div[2]/div[2]/div/div[1]/div[2]/div[2]/div[3]/p/code"))): time.sleep(1)
+while(not(check0_exists_by_tag_name("code"))): time.sleep(1)
 time.sleep(2)
-code=driver0.find_element_by_xpath("/html/body/main/div[1]/div/div[2]/div[2]/div/div[1]/div[2]/div[2]/div[3]/p/code").text
+code=driver0.find_element_by_tag_name("code").text
 driver1.find_element_by_id("code").send_keys(code)      #Input code.
 driver1.find_element_by_xpath("/html/body/div[1]/main/main/div/div[2]/div/div[1]/div[2]/form/div/div/div[2]/button").click() #Finalize
 driver0.close()
